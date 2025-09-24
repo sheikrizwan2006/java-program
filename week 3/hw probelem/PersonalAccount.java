@@ -62,34 +62,3 @@ public class PersonalAccount {
         return "ACCT" + (1000 + totalAccounts + 1);
     }
 }
-
-public class Main {
-    public static void main(String[] args) {
-        PersonalAccount.setBankName("Future Finance Bank");
-
-        PersonalAccount acc1 = new PersonalAccount("Alice Johnson");
-        PersonalAccount acc2 = new PersonalAccount("Bob Smith");
-        PersonalAccount acc3 = new PersonalAccount("Charlie Brown");
-
-        acc1.addIncome(2000, "Salary");
-        acc1.addExpense(500, "Rent");
-        acc1.addExpense(200, "Groceries");
-
-        acc2.addIncome(3000, "Freelance Project");
-        acc2.addExpense(1000, "Travel");
-        acc2.addExpense(500, "Utilities");
-
-        acc3.addIncome(1500, "Part-time Job");
-        acc3.addExpense(300, "Phone Bill");
-
-        acc1.displayAccountSummary();
-        acc2.displayAccountSummary();
-        acc3.displayAccountSummary();
-
-        System.out.println("\nTotal Accounts Created: " + PersonalAccount.getTotalAccounts());
-
-        System.out.println("\nDemonstrating Static vs Instance Variables:");
-        System.out.println("Bank Name (static): Shared by all accounts.");
-        System.out.println("Balance (instance): Unique to each account.");
-    }
-}

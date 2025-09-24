@@ -150,8 +150,13 @@ public class HotelReservationSystem {
             System.out.println("6. Exit");
             System.out.print("Select option: ");
 
-            int choice = sc.nextInt();
-            sc.nextLine();
+            int choice = -1;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue;
+            }
 
             switch (choice) {
                 case 1:
@@ -179,15 +184,31 @@ public class HotelReservationSystem {
                             break;
                         }
                     }
-                    if (roomToBook == null || !roomToBook.isAvailable()) {
-                        System.out.println("Room not available.");
+                    if (roomToBook == null) {
+                        System.out.println("Room not found.");
                         break;
                     }
-
+                    if (!roomToBook.isAvailable()) {
+                        System.out.println("Room is already booked.");
+                        break;
+                    }
                     System.out.print("Enter Check-In Date (YYYY-MM-DD): ");
                     String checkIn = sc.nextLine();
                     System.out.print("Enter Check-Out Date (YYYY-MM-DD): ");
                     String checkOut = sc.nextLine();
+
+                    try {
+                        // Validate date format
+                        LocalDate checkInDate = LocalDate.parse(checkIn);
+                        LocalDate checkOutDate = LocalDate.parse(checkOut);
+                        if (!checkOutDate.isAfter(checkInDate)) {
+                            System.out.println("Check-Out date must be after Check-In date.");
+                            break;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+                        break;
+                    }
 
                     String bookingId = "BKG" + (Booking.totalBookings + 1);
                     Booking booking = new Booking(bookingId, guest, roomToBook, checkIn, checkOut);
